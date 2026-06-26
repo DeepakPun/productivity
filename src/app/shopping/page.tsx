@@ -2,7 +2,7 @@ import ShoppingList from '../components/ShoppingList'
 
 export default function ShoppingPage() {
   return (
-    <main className='text-slate-100 pt-5 px-6 md:px-12 max-w-4xl mx-auto pb-5'>
+    <main className='text-slate-100 pt-5 px-1 md:px-7 max-w-4xl mx-auto pb-5'>
       {/* Scope Header */}
       <header className='mb-2'>
         <div className='flex items-center gap-2 text-xs font-mono text-emerald-400 mb-2 uppercase tracking-widest'>
