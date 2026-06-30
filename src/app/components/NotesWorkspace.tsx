@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface DevNote {
   id: string
@@ -8,35 +8,38 @@ interface DevNote {
   text: string
 }
 
-const DEFAULT_NOTES: DevNote[] = [
-  {
-    id: 'note-1',
-    title: 'Implement Terraform',
-    text: 'Use terraform to provision cloud resources and clean after testing.',
-  },
-]
+const DEFAULT_NOTES: DevNote[] = []
 
 export default function NotesWorkspace() {
-  // Pure lazy state initialization to prevent useEffect linter rules from triggering
-  const [notes, setNotes] = useState<DevNote[]>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('devhq_notes_pool')
-      if (cached) {
-        try {
-          return JSON.parse(cached)
-        } catch {
-          return DEFAULT_NOTES
-        }
-      }
-    }
-    return DEFAULT_NOTES // Falls back to default if no cache exists
-  })
+  const [notes, setNotes] = useState<DevNote[]>([])
+  const [isMounted, setIsMounted] = useState(false)
 
-  // React 19 Form Action maps inputs directly into memory
+  // 1. Mark the component as mounted after client-side hydration completes
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true)
+  }, [])
+
+  // 2. Safely parse data from localStorage exactly once when mounting concludes
+  useEffect(() => {
+    if (!isMounted) return
+
+    const cached = localStorage.getItem('devhq_notes_pool')
+    if (cached) {
+      try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setNotes(JSON.parse(cached))
+      } catch {
+        setNotes(DEFAULT_NOTES)
+      }
+    } else {
+      setNotes(DEFAULT_NOTES)
+    }
+  }, [isMounted])
+
   const handleAddNote = (formData: FormData) => {
     const title = formData.get('noteTitle') as string
     const text = formData.get('noteText') as string
-
     if (!title?.trim() || !text?.trim()) return
 
     const nextNotes = [
@@ -47,7 +50,6 @@ export default function NotesWorkspace() {
         text: text.trim(),
       },
     ]
-
     setNotes(nextNotes)
     localStorage.setItem('devhq_notes_pool', JSON.stringify(nextNotes))
   }
@@ -58,8 +60,17 @@ export default function NotesWorkspace() {
     localStorage.setItem('devhq_notes_pool', JSON.stringify(nextNotes))
   }
 
+  // 3. Render a clean structural loader placeholder until the browser finishes mounting
+  if (!isMounted) {
+    return (
+      <div className='p-12 text-center text-xs font-mono text-slate-500 border border-slate-900 rounded-xl animate-pulse'>
+        {'//'} INITIALIZING_NOTES_WORKSPACE_PIPELINE...
+      </div>
+    )
+  }
+
   return (
-    <div className='space-y-6' suppressHydrationWarning={true}>
+    <div className='space-y-6'>
       {/* Inline Registration Form */}
       <form
         action={handleAddNote}
@@ -103,10 +114,10 @@ export default function NotesWorkspace() {
               <div className='text-xs font-mono text-cyan-400 select-none uppercase tracking-wide mb-1'>
                 Title: {note.title}
               </div>
-              <p className='text-sm text-slate-300 font-sans leading-relaxed break-words'>
+              <p className='text-sm text-slate-300 font-sans leading-relaxed wrap-break-word'>
                 <span className='font-mono text-xs text-slate-500 mr-1'>
                   Text:
-                </span>
+                </span>{' '}
                 {note.text}
               </p>
             </div>

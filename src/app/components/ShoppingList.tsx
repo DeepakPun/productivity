@@ -8,13 +8,7 @@ interface ShoppingItem {
   quantity: number
 }
 
-const DEFAULT_ITEMS: ShoppingItem[] = [
-  { id: 'shop-1', name: 'Croissants', quantity: 3 },
-  { id: 'shop-2', name: 'Water', quantity: 1 },
-  { id: 'shop-3', name: 'Eggs', quantity: 1 },
-  { id: 'shop-4', name: 'Dogs', quantity: 1 },
-  { id: 'shop-5', name: 'Chicken', quantity: 1 },
-]
+const DEFAULT_ITEMS: ShoppingItem[] = []
 
 export default function ShoppingList() {
   // Pure lazy state initialization. No useEffect, no state-set-in-effects.
@@ -59,7 +53,6 @@ export default function ShoppingList() {
   }
 
   return (
-    /* FIXED: suppressHydrationWarning silences Next.js markup reconciliation warnings */
     <div className='space-y-6' suppressHydrationWarning={true}>
       <form
         action={handleAddItem}

@@ -28,4 +28,11 @@ export const MENU_ITEMS: MenuItem[] = [
     href: '/notes',
     disabled: false,
   },
+  {
+    id: 'pomodoro',
+    label: 'Focus Matrix',
+    icon: '⏱️',
+    href: '/pomodoro',
+    disabled: false,
+  },
 ]
