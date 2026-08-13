@@ -4,6 +4,7 @@ export interface MenuItem {
   icon: string;
   disabled: boolean;
   href: string;
+  requiresAuth: boolean;
 }
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -13,6 +14,7 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: "🛒",
     href: "/shopping",
     disabled: false,
+    requiresAuth: true,
   },
   {
     id: "tasks",
@@ -20,6 +22,7 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: "✅",
     href: "/tasks",
     disabled: false,
+    requiresAuth: true,
   },
   {
     id: "notes",
@@ -27,6 +30,7 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: "📝",
     href: "/notes",
     disabled: false,
+    requiresAuth: true,
   },
   {
     id: "pomodoro",
@@ -34,6 +38,7 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: "⏱️",
     href: "/pomodoro",
     disabled: false,
+    requiresAuth: false,
   },
   {
     id: "bills",
@@ -41,5 +46,6 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: "💳",
     href: "/bills",
     disabled: false,
+    requiresAuth: true,
   },
 ];
