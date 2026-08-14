@@ -59,12 +59,16 @@ function SimpleCountdown() {
   }, [target]);
 
   const units = [
-    { label: "months", value: timeLeft.months },
-    { label: "weeks", value: timeLeft.weeks },
-    { label: "days", value: timeLeft.days },
-    { label: "hours", value: timeLeft.hours },
-    { label: "mins", value: timeLeft.mins },
-    { label: "secs", value: timeLeft.secs, highlight: true },
+    { label: timeLeft.months > 1 ? "months" : "month", value: timeLeft.months },
+    { label: timeLeft.weeks > 1 ? "weeks" : "week", value: timeLeft.weeks },
+    { label: timeLeft.days > 1 ? "days" : "day", value: timeLeft.days },
+    { label: timeLeft.hours > 1 ? "hours" : "hour", value: timeLeft.hours },
+    { label: timeLeft.mins > 1 ? "mins" : "min", value: timeLeft.mins },
+    {
+      label: timeLeft.secs > 1 ? "secs" : "sec",
+      value: timeLeft.secs,
+      highlight: true,
+    },
   ];
 
   return (
@@ -91,22 +95,39 @@ function SimpleCountdown() {
         />
       </div>
 
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {units.map((u) => (
-          <div
-            key={u.label}
-            className={`text-4xl rounded-lg border bg-slate-950 p-3 text-center ${u.highlight ? "border-cyan-500/30" : "border-slate-800"}`}
-          >
+      <div className="flex flex-col gap-1">
+        {/* Row 1: The Number Boxes */}
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 items-end">
+          {units.map((u) => (
             <div
-              className={`text-4xl sm:text-4xl font-black tabular-nums ${u.highlight ? "text-cyan-400" : "text-slate-100"}`}
+              key={`val-${u.label}`}
+              className={`rounded-lg border bg-slate-950 text-center flex items-center justify-center transition-all
+          ${
+            u.highlight
+              ? "border-cyan-500/30 p-5 h-28"
+              : "border-slate-800 p-3 h-20"
+          }`}
             >
-              {String(u.value).padStart(2, "0")}
+              <div
+                className={`font-black tabular-nums ${u.highlight ? "text-cyan-400 text-6xl" : "text-slate-100 text-4xl"}`}
+              >
+                {String(u.value).padStart(2, "0")}
+              </div>
             </div>
-            <div className="text-sm uppercase tracking-widest text-slate-500 mt-1">
+          ))}
+        </div>
+
+        {/* Row 2: The Aligned Labels */}
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
+          {units.map((u) => (
+            <div
+              key={`lbl-${u.label}`}
+              className="text-sm uppercase tracking-widest text-slate-500"
+            >
               {u.label}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
