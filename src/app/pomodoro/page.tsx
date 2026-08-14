@@ -87,7 +87,7 @@ function SimpleCountdown() {
         </div>
         <input
           type="datetime-local"
-          className="bg-slate-950 border border-slate-800 rounded px-2 py-1 text- text-slate-300 outline-none focus:border-cyan-500/50"
+          className="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-sm text-slate-300 outline-none focus:border-cyan-500/50"
           value={new Date(target.getTime() - target.getTimezoneOffset() * 60000)
             .toISOString()
             .slice(0, 16)}
@@ -95,39 +95,35 @@ function SimpleCountdown() {
         />
       </div>
 
-      <div className="flex flex-col gap-1">
-        {/* Row 1: The Number Boxes */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 items-end">
-          {units.map((u) => (
-            <div
-              key={`val-${u.label}`}
-              className={`rounded-lg border bg-slate-950 text-center flex items-center justify-center transition-all
-          ${
-            u.highlight
-              ? "border-cyan-500/30 p-5 h-28"
-              : "border-slate-800 p-3 h-20"
-          }`}
-            >
+      {/* Single grid - box + label stay together */}
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+        {units.map((u) => (
+          <div key={u.label} className="flex flex-col gap-2">
+            {/* Fixed height wrapper so all labels align even with highlight */}
+            <div className="h-28 flex items-end">
               <div
-                className={`font-black tabular-nums ${u.highlight ? "text-cyan-400 text-6xl" : "text-slate-100 text-4xl"}`}
+                className={`w-full rounded-lg border bg-slate-950 text-center flex items-center justify-center transition-all ${
+                  u.highlight
+                    ? "border-cyan-500/30 p-5 h-28"
+                    : "border-slate-800 p-3 h-20"
+                }`}
               >
-                {String(u.value).padStart(2, "0")}
+                <div
+                  className={`font-black tabular-nums ${
+                    u.highlight
+                      ? "text-cyan-400 text-6xl"
+                      : "text-slate-100 text-4xl"
+                  }`}
+                >
+                  {String(u.value).padStart(2, "0")}
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Row 2: The Aligned Labels */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
-          {units.map((u) => (
-            <div
-              key={`lbl-${u.label}`}
-              className="text-sm uppercase tracking-widest text-slate-500"
-            >
+            <div className="text-center text- sm:text-sm uppercase tracking-widest text-slate-500">
               {u.label}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
