@@ -48,4 +48,12 @@ export const MENU_ITEMS: MenuItem[] = [
     disabled: false,
     requiresAuth: true,
   },
+  {
+    id: "devops-lab",
+    label: "DevOps Lab",
+    icon: "🛠️",
+    href: "/devops",
+    disabled: false,
+    requiresAuth: true,
+  },
 ];

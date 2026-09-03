@@ -24,3 +24,21 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@theme {
+  /* Register your custom animation utility name */
+  --animate-bg-pulse: blue-green-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  /* Define your transition keyframes directly inside the theme block */
+  @keyframes blue-green-pulse {
+    0%,
+    100% {
+      color: var(--color-cyan-400);
+      filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+    }
+    50% {
+      color: var(--color-emerald-400);
+      filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.7));
+    }
+  }
+}
