@@ -56,4 +56,12 @@ export const MENU_ITEMS: MenuItem[] = [
     disabled: false,
     requiresAuth: true,
   },
+  {
+    id: "schedule",
+    label: "Daily Schedule",
+    icon: "📅",
+    href: "/schedule",
+    disabled: false,
+    requiresAuth: true,
+  },
 ];

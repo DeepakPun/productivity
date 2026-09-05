@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prod": "rm -rf .next && tsc --noEmit && npm run build && npm run start"
   },
   "dependencies": {
     "iron-session": "^8.0.4",
