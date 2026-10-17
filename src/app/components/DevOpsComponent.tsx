@@ -2,12 +2,12 @@ const ROADMAP = [
   {
     title: "1. Container Orchestration & Local Dev",
     nonAws: [
-      { name: "Kubernetes (K8s)", icon: "☸️", start: true },
+      { name: "Kubernetes (K8s)", icon: "☸", start: true },
       { name: "Minikube / Kind", icon: "📦", start: false },
-      { name: "Skaffold", icon: "🛠️", start: false },
+      { name: "Skaffold", icon: "🛠", start: false },
     ],
     aws: [
-      { name: "EKS", icon: "☸️", start: true },
+      { name: "EKS", icon: "☸", start: true },
       { name: "ECS", icon: "📦", start: false },
       { name: "Copilot", icon: "🤖", start: false },
     ],
@@ -21,21 +21,21 @@ const ROADMAP = [
     ],
     aws: [
       { name: "CodePipeline", icon: "🚀", start: true },
-      { name: "CodeBuild", icon: "🏗️", start: false },
+      { name: "CodeBuild", icon: "🏗", start: false },
       { name: "CodeDeploy", icon: "📦", start: false },
     ],
   },
   {
     title: "3. DevSecOps (Security & Compliance)",
     nonAws: [
-      { name: "Trivy", icon: "🛡️", start: true },
+      { name: "Trivy", icon: "🛡", start: true },
       { name: "SonarQube", icon: "🔍", start: false },
-      { name: "OWASP ZAP", icon: "🕷️", start: false },
+      { name: "OWASP ZAP", icon: "🕷", start: false },
       { name: "HashiCorp Vault", icon: "🔐", start: false },
     ],
     aws: [
       { name: "Secrets Manager", icon: "🔐", start: true },
-      { name: "Amazon Inspector", icon: "🛡️", start: false },
+      { name: "Amazon Inspector", icon: "🛡", start: false },
       { name: "AWS CodeGuru", icon: "🔍", start: false },
       { name: "AWS WAF", icon: "🧱", start: false },
     ],
@@ -54,7 +54,7 @@ const ROADMAP = [
       { name: "Amazon MSK", icon: "📨", start: false },
       { name: "App Mesh", icon: "🧬", start: false },
       // { name: "App Mesh", icon: "🩻", start: false },
-      // { name: "App Mesh", icon: "🕸️", start: false },
+      // { name: "App Mesh", icon: "🕸", start: false },
     ],
   },
   {
@@ -65,26 +65,24 @@ const ROADMAP = [
       { name: "Jaeger", icon: "🔎", start: false },
     ],
     aws: [
-      { name: "CloudWatch", icon: "👁️", start: true },
+      { name: "CloudWatch", icon: "👁", start: true },
       { name: "AWS X-Ray", icon: "🔎", start: false },
       { name: "Amazon Managed Prometheus & Grafana", icon: "📊", start: false },
     ],
   },
 ];
 
-function ToolList({
-  items,
-}: {
-  items: { name: string; icon: string; start: boolean }[];
-}) {
+type Tool = { name: string; icon: string; start: boolean };
+
+function ToolList({ items }: { items: Tool[] }) {
   return (
     <ul className="space-y-2.5">
       {items.map((item) => (
         <li
           key={item.name}
-          className={`flex items-center justify-between rounded-lg border px-4 py-3 text-xs transition ${
+          className={`flex items-center justify-between rounded-lg border px-4 py-3 transition ${
             item.start
-              ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-100 text-xs"
+              ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-100"
               : "border-slate-800 bg-slate-950/60 text-slate-300"
           }`}
         >
@@ -93,7 +91,7 @@ function ToolList({
             <span className="text-xs sm:text-sm">{item.name}</span>
           </span>
           {item.start && (
-            <span className="ml-3 shrink-0 rounded-full bg-cyan-400 px-2.5 py-0.5 text-xs font-black uppercase tracking-widest text-slate-950">
+            <span className="ml-3 shrink-0 rounded-full bg-cyan-400 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-950">
               Start Here
             </span>
           )}
@@ -111,15 +109,13 @@ export default function DevOpsComponent() {
           key={cat.title}
           className="w-full rounded-xl border border-slate-800 bg-slate-900/50 p-6 sm:p-8"
         >
-          {/* Single column for category title */}
           <h2 className="mb-6 text-xs sm:text-sm font-black uppercase tracking-widest text-slate-100">
             {cat.title}
           </h2>
 
-          {/* Two columns for tools */}
           <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
             <div>
-              <h3 className="mb-3 text- sm:text-xs font-mono font-bold uppercase tracking-widest text-slate-400">
+              <h3 className="mb-3 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-widest text-slate-400">
                 Non-AWS{" "}
                 <span className="text-slate-500 normal-case">
                   (Cloud-Agnostic)
@@ -129,7 +125,7 @@ export default function DevOpsComponent() {
             </div>
 
             <div>
-              <h3 className="mb-3 text- sm:text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
+              <h3 className="mb-3 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
                 AWS-Native
               </h3>
               <ToolList items={cat.aws} />
