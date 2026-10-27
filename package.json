@@ -10,6 +10,7 @@
     "prod": "rm -rf .next && tsc --noEmit && npm run build && npm run start"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "iron-session": "^8.0.4",
     "next": "^16.3.0",
     "react": "^19.2.8",
