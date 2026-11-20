@@ -23,7 +23,8 @@ export function middleware(request: NextRequest) {
   }
 
   // 2. Allow access if the route is explicitly public
-  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const isPublicRoute =
+    PUBLIC_ROUTES.includes(pathname) || pathname.startsWith("/s/");
 
   // 3. Protect internal routes: Redirect if NOT public AND NOT authenticated
   if (!isPublicRoute && !isUserAuthenticated) {

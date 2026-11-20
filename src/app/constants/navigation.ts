@@ -64,4 +64,12 @@ export const MENU_ITEMS: MenuItem[] = [
     disabled: false,
     requiresAuth: true,
   },
+  {
+    id: "shortener",
+    label: "URL Shortener",
+    icon: "🔗",
+    href: "/shortener",
+    disabled: false,
+    requiresAuth: true,
+  },
 ];
